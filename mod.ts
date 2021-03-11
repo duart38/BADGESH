@@ -1,4 +1,4 @@
-import {poke, updateDB, set} from "./check.ts";
+import {poke, updateDB, set, fibonacci} from "./check.ts";
 
 const textDecoder = new TextDecoder();
 
@@ -33,7 +33,7 @@ export async function getHistory(file = `${Deno.env.get("HOME")}/${SHELL.zsh}`){
     let newLines = textDecoder.decode(await Deno.run({cmd: ["tail", "-c", NEW_BYTES.toString(), file], stdout: 'piped'}).output());
     //console.log("new lines", newLines);
     const counted_commands = poke(newLines.split("\n"));
-    console.log(counted_commands);
+    // console.log(counted_commands);
     updateDB(counted_commands);
     
 }
