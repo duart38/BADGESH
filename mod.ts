@@ -1,4 +1,4 @@
-import {poke, updateDB, set, fibonacci} from "./check.ts";
+import {poke, updateDB, set} from "./check.ts";
 
 const textDecoder = new TextDecoder();
 
