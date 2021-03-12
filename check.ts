@@ -57,7 +57,6 @@ export function poke(lines: string[]): Record<string, number> {
       }
     });
   });
-  checkLevel(ACCUMULATOR);
   return ACCUMULATOR;
 }
 
