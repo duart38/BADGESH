@@ -32,14 +32,18 @@ const COMMANDS: command[] = [
 
 const RANGES = levelsToRange(levels(config.levels)).reverse();
 export function checkLevel(data: Record<string, number>) {
+  const ACHIEVEMENTS = JSON.parse(Deno.readTextFileSync("achievements.json"));
   Object.entries(data).forEach(([key, val]) => {
     const currLevel = RANGES.find((x) => x.check(val));
-    if (currLevel) {
+    if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]=[];
+    if (currLevel && !ACHIEVEMENTS[`${key}`].includes(currLevel.lowerBound)) {
       Notify(
         "achievement unlocked", `use ${key} more than ${currLevel.lowerBound} times`
       );
+      ACHIEVEMENTS[`${key}`].push(currLevel.lowerBound);
     }
   });
+  Deno.writeTextFileSync("achievements.json", JSON.stringify(ACHIEVEMENTS));
 }
 
 /**
