@@ -1,5 +1,6 @@
 import { poke } from "./check.ts";
 import { set, updateDB } from "./db.ts";
+import { config } from "./config.js";
 
 const textDecoder = new TextDecoder();
 
@@ -14,7 +15,7 @@ export function checkShell(): SHELL {
   else return SHELL.bash;
 }
 
-var lastFileSize = JSON.parse(Deno.readTextFileSync("db.json")).lastFileSize;
+var lastFileSize = JSON.parse(Deno.readTextFileSync(config.db)).lastFileSize;
 export async function getHistory(file: string) {
   const { size } = Deno.statSync(file);
 
@@ -22,7 +23,7 @@ export async function getHistory(file: string) {
   const NEW_BYTES = size - lastFileSize; // new blocks in bytes
 
   lastFileSize = size; // update global
-  set("./db.json", "lastFileSize", size);
+  set(config.db, "lastFileSize", size);
 
   console.log("new bytes", NEW_BYTES);
   if (NEW_BYTES <= 0) return;
@@ -33,7 +34,6 @@ export async function getHistory(file: string) {
       stdout: "piped",
     }).output(),
   );
-  //console.log("new lines", newLines);
   const ACCUMULATED_COMMANDS = poke(newLines.split("\n"));
   updateDB(ACCUMULATED_COMMANDS);
 }

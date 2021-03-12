@@ -1,3 +1,4 @@
+import { config } from "./config.js";
 interface command {
   name: string;
   regex: RegExp;
@@ -26,13 +27,24 @@ const COMMANDS: command[] = [
   { name: "clear", regex: /clear\s/g },
   { name: "curl", regex: /curl\s/g },
 ];
+const RANGES = levelsToRange(levels(config.levels)).reverse();
+export function checkLevel(data: Record<string, number>) {
+  Object.entries(data).forEach(([key, val]) => {
+    const currLevel = RANGES.find((x) => x.check(val));
+    if (currLevel) {
+      console.log(
+        `achievement unlocked: use ${key} more than ${currLevel.lowerBound} times`,
+      );
+    }
+  });
+}
 
 /**
  * pokes each line in an array to find keywords @see COMMANDS
  * @param lines 
  * @returns the accumulated results.
  */
-export function poke(lines: string[]) {
+export function poke(lines: string[]): Record<string, number> {
   const ACCUMULATOR: Record<string, number> = {};
   lines.forEach((cur) => {
     COMMANDS.forEach((cmd) => {
@@ -42,15 +54,19 @@ export function poke(lines: string[]) {
       }
     });
   });
+  checkLevel(ACCUMULATOR);
   return ACCUMULATOR;
 }
 
 /**
  * Calculates level curve
- * @param levels the amount of levels to increase by
+ * @param levels the amount of levels to increase by(needs to be even)
  * @returns an array of numbers representing the XP required to get there
  */
 export function levels(levels: number): number[] {
+  if (levels % 2 != 0) {
+    throw new Error("levels value need to be an even number");
+  }
   let n1 = 1, n2 = 2, nextTerm;
   let temp: number[] = [];
   for (let i = 1; i <= levels; i++) {
@@ -60,4 +76,32 @@ export function levels(levels: number): number[] {
     n2 = nextTerm;
   }
   return temp;
+}
+
+interface rangeFunction {
+  check: (x: number) => boolean;
+  /* the start of the range */
+  lowerBound: number;
+}
+
+/**
+ * Converts an even number of level weights to range functions
+ * @param levels 
+ */
+export function levelsToRange(levels: number[]): rangeFunction[] {
+  if (levels.length % 2 != 0) {
+    throw new Error("levels array length needs to be even");
+  }
+  const ranges: rangeFunction[] = [];
+  for (let i = 0; i < levels.length - 1; i++) {
+    ranges.push({
+      check: (x: number) => x >= levels[i] && x < levels[i + 1],
+      lowerBound: levels[i],
+    });
+  }
+  ranges.push({
+    check: (x: number) => x >= levels[levels.length - 1],
+    lowerBound: levels[levels.length - 1],
+  });
+  return ranges;
 }
