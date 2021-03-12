@@ -1,6 +1,8 @@
 # BADGESH
-
 terminal achievement spitter
+
+![alt text](https://github.com/duart38/BADGESH/blob/main/images/notf1.png?raw=true "Logo Title Text 1")
+
 ```
 ┌───────┬─────────┬───────┐
 │ (idx) │   op    │ count │
