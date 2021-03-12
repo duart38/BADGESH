@@ -9,7 +9,7 @@ enum SHELL {
 }
 
 export function checkShell(): SHELL {
-  const t = Deno.env.get("SHELL") || "zsh";
+  const t = Deno.env.get("SHELL") || "bash";
   if (t.endsWith("zsh")) return SHELL.zsh;
   else return SHELL.bash;
 }
