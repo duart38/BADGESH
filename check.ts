@@ -33,16 +33,16 @@ const COMMANDS: command[] = [
  * @returns the accumulated results.
  */
 export function poke(lines: string[]) {
-  let accumulator: any = {};
+  const ACCUMULATOR: Record<string, number> = {};
   lines.forEach((cur) => {
     COMMANDS.forEach((cmd) => {
       const matches = [...cur.matchAll(cmd.regex)].length;
       if (matches > 0) {
-        accumulator[cmd.name] = (accumulator[cmd.name] || 0) + matches;
+        ACCUMULATOR[cmd.name] = (ACCUMULATOR[cmd.name] || 0) + matches;
       }
     });
   });
-  return accumulator;
+  return ACCUMULATOR;
 }
 
 /**
