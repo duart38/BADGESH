@@ -3,7 +3,7 @@
  * it does NOT replace the data
  * @param newData 
  */
-export function updateDB(newData: any) {
+export function updateDB(newData: Record<string, number>) {
   const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync("./db.json"));
   Object.keys(newData).forEach((val) => {
     SYSTEM_DATA[val] = (SYSTEM_DATA[val] || 0) + newData[val];
@@ -13,9 +13,8 @@ export function updateDB(newData: any) {
 
 /**
  * Sets specific item in the database
- * @param newData 
  */
-export function set(file: string, key: string, value: any) {
+export function set(file: string, key: string, value: number | string | boolean) {
   const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync(file));
   SYSTEM_DATA[key] = value;
   Deno.writeTextFileSync(file, JSON.stringify(SYSTEM_DATA));
