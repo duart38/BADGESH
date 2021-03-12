@@ -1,4 +1,6 @@
 import { config } from "./config.js";
+import { Notify } from "./notify.ts";
+
 interface command {
   name: string;
   regex: RegExp;
@@ -27,13 +29,14 @@ const COMMANDS: command[] = [
   { name: "clear", regex: /clear\s/g },
   { name: "curl", regex: /curl\s/g },
 ];
+
 const RANGES = levelsToRange(levels(config.levels)).reverse();
 export function checkLevel(data: Record<string, number>) {
   Object.entries(data).forEach(([key, val]) => {
     const currLevel = RANGES.find((x) => x.check(val));
     if (currLevel) {
-      console.log(
-        `achievement unlocked: use ${key} more than ${currLevel.lowerBound} times`,
+      Notify(
+        "achievement unlocked", `use ${key} more than ${currLevel.lowerBound} times`
       );
     }
   });

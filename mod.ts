@@ -1,6 +1,7 @@
 import { poke } from "./check.ts";
 import { set, updateDB } from "./db.ts";
 import { config } from "./config.js";
+import { printOut } from "./notify.ts";
 
 const textDecoder = new TextDecoder();
 
@@ -25,7 +26,6 @@ export async function getHistory(file: string) {
   lastFileSize = size; // update global
   set(config.db, "lastFileSize", size);
 
-  console.log("new bytes", NEW_BYTES);
   if (NEW_BYTES <= 0) return;
 
   const newLines = textDecoder.decode(
@@ -35,7 +35,8 @@ export async function getHistory(file: string) {
     }).output(),
   );
   const ACCUMULATED_COMMANDS = poke(newLines.split("\n"));
-  updateDB(ACCUMULATED_COMMANDS);
+  const NEW_DATA = updateDB(ACCUMULATED_COMMANDS);
+  printOut(NEW_DATA);
 }
 
 const SHELL_HISTORY = `${Deno.env.get("HOME")}/${checkShell()}`;
