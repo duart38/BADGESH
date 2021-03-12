@@ -22,7 +22,7 @@ export async function getHistory(file: string) {
   const NEW_BYTES = size - lastFileSize; // new blocks in bytes
 
   lastFileSize = size; // update global
-  set("db.json", "lastFileSize", size);
+  set("./db.json", "lastFileSize", size);
 
   console.log("new bytes", NEW_BYTES);
   if (NEW_BYTES <= 0) return;

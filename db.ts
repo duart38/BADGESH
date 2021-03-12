@@ -1,3 +1,8 @@
+/**
+ * This method takes data passed in and adds the results to the already existing values.
+ * it does NOT replace the data
+ * @param newData 
+ */
 export function updateDB(newData: any) {
   const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync("./db.json"));
   Object.keys(newData).forEach((val) => {
@@ -11,7 +16,7 @@ export function updateDB(newData: any) {
  * @param newData 
  */
 export function set(file: string, key: string, value: any) {
-  const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync("./db.json"));
+  const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync(file));
   SYSTEM_DATA[key] = value;
-  Deno.writeTextFileSync("./db.json", JSON.stringify(SYSTEM_DATA));
+  Deno.writeTextFileSync(file, JSON.stringify(SYSTEM_DATA));
 }
