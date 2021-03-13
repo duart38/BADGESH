@@ -1,0 +1,1 @@
+deno bundle --reload --unstable mod.ts ./build/badgesh.bundle.js; deno compile -A --unstable ./build/badgesh.bundle.js
