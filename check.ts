@@ -30,7 +30,9 @@ export function checkLevel(data: Record<string, number>) {
 
 /**
  * pokes each line in an array to find keywords @see COMMANDS
- * @param lines 
+ * accumulates these findings (adding duplicate counts to the previous count).
+ * @see command
+ * @param lines lines array. typically found in the shell's history file. needs to be split by new line
  * @returns the accumulated results.
  */
 export function poke(lines: string[]): Record<string, number> {
@@ -66,6 +68,9 @@ export function levels(levels: number): number[] {
   return temp;
 }
 
+/**
+ * an object that contains information about a number range.
+ */
 interface rangeFunction {
   // contains the range logic. pass in a number to check if it falls withing the range
   check: (x: number) => boolean;
