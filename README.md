@@ -1,7 +1,10 @@
+![](https://raw.githubusercontent.com/duart38/BADGESH/main/images/badgeshlogo.svg?token=AHL2IKPDN3W6C4377IMJJE3AKX7NK)
+
 # BADGESH
 terminal achievement spitter
 
 ![alt text](https://github.com/duart38/BADGESH/blob/main/images/notf1.png?raw=true "Logo Title Text 1")
+
 
 ```
 ┌───────┬─────────┬───────┐
