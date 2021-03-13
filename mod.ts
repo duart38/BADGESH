@@ -16,7 +16,7 @@ export function checkShell(): SHELL {
   else return SHELL.bash;
 }
 
-var lastFileSize = JSON.parse(Deno.readTextFileSync(config.db)).lastFileSize;
+var lastFileSize = JSON.parse(Deno.readTextFileSync(config.db.stats)).lastFileSize;
 export async function getHistory(file: string) {
   const { size } = Deno.statSync(file);
 
@@ -24,7 +24,7 @@ export async function getHistory(file: string) {
   const NEW_BYTES = size - lastFileSize; // new blocks in bytes
 
   lastFileSize = size; // update global
-  set(config.db, "lastFileSize", size);
+  set(config.db.stats, "lastFileSize", size);
 
   if (NEW_BYTES <= 0) return;
 

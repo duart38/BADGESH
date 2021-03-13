@@ -32,7 +32,7 @@ const COMMANDS: command[] = [
 
 const RANGES = levelsToRange(levels(config.levels)).reverse();
 export function checkLevel(data: Record<string, number>) {
-  const ACHIEVEMENTS = JSON.parse(Deno.readTextFileSync("achievements.json"));
+  const ACHIEVEMENTS = JSON.parse(Deno.readTextFileSync(config.db.achievements));
   Object.entries(data).forEach(([key, val]) => {
     const currLevel = RANGES.find((x) => x.check(val));
     if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]=[];
@@ -43,7 +43,7 @@ export function checkLevel(data: Record<string, number>) {
       ACHIEVEMENTS[`${key}`].push(currLevel.lowerBound);
     }
   });
-  Deno.writeTextFileSync("achievements.json", JSON.stringify(ACHIEVEMENTS));
+  Deno.writeTextFileSync(config.db.achievements, JSON.stringify(ACHIEVEMENTS));
 }
 
 /**

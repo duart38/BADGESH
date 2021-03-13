@@ -5,11 +5,11 @@ import { config } from "./config.js";
  * @param newData 
  */
 export function updateDB(newData: Record<string, number>): Record<string, number> {
-  const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync(config.db));
+  const SYSTEM_DATA = JSON.parse(Deno.readTextFileSync(config.db.stats));
   Object.keys(newData).forEach((val) => {
     SYSTEM_DATA[val] = (SYSTEM_DATA[val] || 0) + newData[val];
   });
-  Deno.writeTextFileSync(config.db, JSON.stringify(SYSTEM_DATA));
+  Deno.writeTextFileSync(config.db.stats, JSON.stringify(SYSTEM_DATA));
   return SYSTEM_DATA;
 }
 
