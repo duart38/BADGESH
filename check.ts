@@ -1,6 +1,7 @@
 import { config } from "./config.js";
 import { Notify } from "./notify.ts";
-import {COMMANDS} from "./data/commands.ts";
+import {COMMANDS} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
+import type {command} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 
 const RANGES = levelsToRange(levels(config.levels)).reverse();
 export function checkLevel(data: Record<string, number>) {
