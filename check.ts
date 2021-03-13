@@ -1,5 +1,6 @@
 import { config } from "./config.js";
 import { Notify } from "./notify.ts";
+import {loadOrCreate} from "./utils/utils.ts";
 import {COMMANDS} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 import type {command} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 
@@ -14,7 +15,7 @@ const RANGES = levelsToRange(levels(config.levels)).reverse();
  * @param data 
  */
 export function checkLevel(data: Record<string, number>) {
-  const ACHIEVEMENTS = JSON.parse(Deno.readTextFileSync(config.db.achievements));
+  const ACHIEVEMENTS = JSON.parse(loadOrCreate(config.db.achievements, "{}"));
   Object.entries(data).forEach(([key, val]) => {
     const currLevel = RANGES.find((x) => x.check(val));
     if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]=[];

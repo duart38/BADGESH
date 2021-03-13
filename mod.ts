@@ -2,6 +2,7 @@ import { poke, checkLevel } from "./check.ts";
 import { set, updateDB } from "./db.ts";
 import { config } from "./config.js";
 import { printOut } from "./notify.ts";
+import {loadOrCreate} from "./utils/utils.ts";
 
 const textDecoder = new TextDecoder();
 
@@ -16,7 +17,7 @@ export function checkShell(): SHELL {
   else return SHELL.bash;
 }
 
-var lastFileSize = JSON.parse(Deno.readTextFileSync(config.db.stats)).lastFileSize;
+var lastFileSize = JSON.parse(loadOrCreate(config.db.stats, JSON.stringify({"lastFileSize":0}))).lastFileSize;
 export async function getHistory(file: string) {
   const { size } = Deno.statSync(file);
 
