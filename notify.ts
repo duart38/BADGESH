@@ -17,3 +17,22 @@ export function printOut(data: Record<string, number>){
     })
     console.table([...t])
 }
+
+export function printOutHTML(data: Record<string, number>){
+    console.clear();
+    let t = `
+    <html>
+        <head></head>
+        <body>
+            ${Object.entries(data).map(([key,val])=>{
+                return `<h1>${key} : ${val}</h1>`;
+            }).join("\n")}
+        </body>
+    </html>
+    `;
+    console.log(t)
+}
+
+export function platypusNotification(text: string){
+    console.log(`NOTIFICATION:${text}\n`);
+}

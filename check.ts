@@ -1,6 +1,6 @@
 import { config } from "./config.js";
-import { Notify } from "./notify.ts";
-import {loadOrCreate} from "./utils/utils.ts";
+import { Notify, platypusNotification } from "./notify.ts";
+import {loadOrCreate, isPlatypus} from "./utils/utils.ts";
 import {COMMANDS} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 import type {command} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 
@@ -20,9 +20,14 @@ export function checkLevel(data: Record<string, number>) {
     const currLevel = RANGES.find((x) => x.check(val));
     if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]=[];
     if (currLevel && !ACHIEVEMENTS[`${key}`].includes(currLevel.lowerBound)) {
-      Notify(
-        "achievement unlocked", `use ${key} more than ${currLevel.lowerBound} times`
-      );
+      const isFlag = key.startsWith("-");
+      if(isPlatypus()){
+        platypusNotification(`🏆: ${isFlag ? "use 🚩" : "run 🧰"} "${key}" more than ${currLevel.lowerBound} times`);
+      }else{
+        Notify(
+          "🏆", `${isFlag ? "use 🚩" : "run 🧰"} "${key}" more than ${currLevel.lowerBound} times`
+        );
+      }
       ACHIEVEMENTS[`${key}`].push(currLevel.lowerBound);
     }
   });
