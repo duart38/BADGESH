@@ -1,6 +1,7 @@
 import { config } from "./config.js";
 import { Notify, platypusNotification } from "./notify.ts";
 import {loadOrCreate, isPlatypus} from "./utils/utils.ts";
+import {getRandomAchievement} from "./data/achievements.ts";
 import {COMMANDS} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 import type {command} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 
@@ -20,12 +21,12 @@ export function checkLevel(data: Record<string, number>) {
     const currLevel = RANGES.find((x) => x.check(val));
     if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]=[];
     if (currLevel && !ACHIEVEMENTS[`${key}`].includes(currLevel.lowerBound)) {
-      const isFlag = key.startsWith("-");
+      const str = getRandomAchievement(key)?.build(currLevel.lowerBound) || `🏆: run 🧰 ${key} more than ${currLevel.lowerBound} times`;
       if(isPlatypus()){
-        platypusNotification(`🏆: ${isFlag ? "use 🚩" : "run 🧰"} "${key}" more than ${currLevel.lowerBound} times`);
+        platypusNotification(str);
       }else{
         Notify(
-          "🏆", `${isFlag ? "use 🚩" : "run 🧰"} "${key}" more than ${currLevel.lowerBound} times`
+          "Achievement", str
         );
       }
       ACHIEVEMENTS[`${key}`].push(currLevel.lowerBound);
@@ -77,7 +78,7 @@ export function levels(levels: number): number[] {
 /**
  * an object that contains information about a number range.
  */
-interface rangeFunction {
+export interface rangeFunction {
   // contains the range logic. pass in a number to check if it falls withing the range
   check: (x: number) => boolean;
   //the start of the range
