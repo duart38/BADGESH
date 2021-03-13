@@ -35,6 +35,13 @@ export const COMMANDS: command[] = [
     { name: "gp", regex: /gp\s/g },
     { name: "code", regex: /code\s/g },
     { name: "vim", regex: /vi(|m)\s/g },
+    { name: "node", regex: /node\s/g },
+    { name: "grep", regex: /grep\s/g },
+    { name: "awk", regex: /awk\s/g },
+    { name: "env", regex: /env\s/g },
+    { name: "exit", regex: /exit\s/g },
+    { name: "gzip", regex: /gzip\s/g },
+    { name: "ifconfig", regex: /ifconfig\s/g },
 
     // flags below..
     { name: "-g", regex: /\s-g(\s|=)/g },
