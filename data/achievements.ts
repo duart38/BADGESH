@@ -6,8 +6,8 @@ export const isFlag = (key: string)=> key.startsWith("-");
 
 export const ACHIEVEMENTS: Record<string, achievement[]> = {
     lastFileSize: [
-        {build: (n)=> `🏆: fat terminal (history >= ${n * 1000000} MB)`},
-        {build: (n)=> `🏆: "it's growing 🍆" (history >= ${n * 1000000} MB)`},
+        {build: (n)=> `🏆: fat terminal (history >= ${n / 1000000} MB)`},
+        {build: (n)=> `🏆: "it's growing 🍆" (history >= ${n / 1000000} MB)`},
     ],
     ls: [
         {build: (n)=> `🏆: 🧰  ls more than ${n} times`},
