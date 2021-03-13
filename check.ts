@@ -4,6 +4,15 @@ import {COMMANDS} from "https://raw.githubusercontent.com/duart38/BADGESH/main/d
 import type {command} from "https://raw.githubusercontent.com/duart38/BADGESH/main/data/commands.ts?token=AHL2IKOKS3HVPXTXN7K3OTDAKXCVO";
 
 const RANGES = levelsToRange(levels(config.levels)).reverse();
+/**
+ * Given an object that contains the added values of all commands this method goes over each of them and check
+ * if they have passed a level by checking against the ranges defined by the levels to range function.
+ * This method also saves to an achievement database to prevent re-sending the same achievements on restart
+ * @see levelsToRange
+ * @see levels
+ * @see RANGES and @see rangeFunction
+ * @param data 
+ */
 export function checkLevel(data: Record<string, number>) {
   const ACHIEVEMENTS = JSON.parse(Deno.readTextFileSync(config.db.achievements));
   Object.entries(data).forEach(([key, val]) => {
@@ -58,8 +67,9 @@ export function levels(levels: number): number[] {
 }
 
 interface rangeFunction {
+  // contains the range logic. pass in a number to check if it falls withing the range
   check: (x: number) => boolean;
-  /* the start of the range */
+  //the start of the range
   lowerBound: number;
 }
 
