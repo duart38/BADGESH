@@ -1,4 +1,7 @@
 export const config = {
   levels: 20,
-  db: "./db.json",
+  db: {
+    stats: "./data/db.json",
+    achievements: "./data/achievements"
+  }
 };

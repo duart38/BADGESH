@@ -1,2 +1,2 @@
-echo "{\"lastFileSize\":0}" > db.json
-echo "{}" > achievements.json
+echo "{\"lastFileSize\":0}" > ./data/db.json
+echo "{}" > ./data/achievements.json
