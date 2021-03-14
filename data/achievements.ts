@@ -78,6 +78,14 @@ export const ACHIEVEMENTS: Record<string, achievement[]> = {
     ],
     env: [
         {build: (n)=> `🏆: env -> ${Deno.env.toObject.toString()}`},
+    ],
+    curl: [
+        {build: (n)=> `🏆: spaghetti. (curl ~ ${n})`},
+        {build: (n)=> `🏆: ➰ x${n}`},
+    ],
+    git:[
+        {build: (n)=> `🏆: git add .; git commit -m ""; gp (${n})`},
+        {build: (n)=> `🏆: deployment day! (git ${n})`},
     ]
 }
 export function getRandomAchievement(command: string): achievement | undefined {
