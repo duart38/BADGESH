@@ -2,6 +2,7 @@
 terminal achievement thingy.
 
 <img src="https://github.com/duart38/BADGESH/blob/main/images/notf1.png?raw=true" alt="drawing" width="80%"/>
+<img src="https://github.com/duart38/BADGESH/blob/main/images/cli.png?raw=true" alt="drawing" width="100%"/>
 
 ## How-to's ❓
 ### Install option 1 (the lazy method)
