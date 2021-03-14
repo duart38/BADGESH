@@ -81,7 +81,6 @@ export const ACHIEVEMENTS: Record<string, achievement[]> = {
     ]
 }
 export function getRandomAchievement(command: string): achievement | undefined {
-    console.log(ACHIEVEMENTS[command]);
     if(!ACHIEVEMENTS[command]) return undefined;
     return ACHIEVEMENTS[command][Math.floor(Math.random() * ACHIEVEMENTS[command].length) | 0];
 }
