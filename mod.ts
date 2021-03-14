@@ -31,8 +31,10 @@ export function checkShell(): SHELL {
 }
 
 let dbdata = JSON.parse(loadOrCreate(config.db.stats, JSON.stringify({"lastFileSize":0})));
-
 var lastFileSize = dbdata.lastFileSize;
+
+const screen = new CLI(true);
+
 export async function getHistory(file: string) {
   const { size } = Deno.statSync(file);
 
@@ -52,12 +54,13 @@ export async function getHistory(file: string) {
   );
   const ACCUMULATED_COMMANDS = poke(newLines.split("\n"));
   const NEW_DATA = updateDB(ACCUMULATED_COMMANDS);
-  checkLevel(NEW_DATA);
+  const NEW_ACHIEVEMENTS = checkLevel(NEW_DATA);
+  NEW_ACHIEVEMENTS.forEach((v)=> screen.addAchievement(v));
+  screen.print();
 }
 
 const SHELL_HISTORY = `${Deno.env.get("HOME")}/${checkShell()}`;
 await getHistory(SHELL_HISTORY);
-new CLI(true);
 
 const watcher = Deno.watchFs(SHELL_HISTORY);
 for await (const event of watcher) {

@@ -17,12 +17,14 @@ const RANGES = levelsToRange(levels(config.levels)).reverse();
  */
 export function checkLevel(data: Record<string, number>) {
   const ACHIEVEMENTS: {[x: string]: {givenRanges: number[], textValues: string[]}} = JSON.parse(loadOrCreate(config.db.achievements, "{}"));
+  let newlyGiven: string[] = [];
   Object.entries(data).forEach(([key, val]) => {
     const currLevel = RANGES.find((x) => x.check(val));
     if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]= {givenRanges: [], textValues: []};
     if (currLevel && !ACHIEVEMENTS[`${key}`].givenRanges.includes(currLevel.lowerBound)) {
       const str = getRandomAchievement(key)?.build(currLevel.lowerBound) || `🏆: run 🧰 ${key} more than ${currLevel.lowerBound} times`;
       ACHIEVEMENTS[`${key}`].textValues.push(str);
+      newlyGiven.push(str);
       if(isPlatypus()){
         platypusNotification(str);
       }else{
@@ -30,10 +32,12 @@ export function checkLevel(data: Record<string, number>) {
           "Achievement", str
         );
       }
+      
       ACHIEVEMENTS[`${key}`].givenRanges.push(currLevel.lowerBound);
     }
   });
   Deno.writeTextFileSync(config.db.achievements, JSON.stringify(ACHIEVEMENTS));
+  return newlyGiven;
 }
 
 /**
