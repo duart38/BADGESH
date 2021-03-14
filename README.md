@@ -12,7 +12,7 @@ Install it as a global deno script.
 ***This method allows you to run it with arguments from your terminal anywhere you are. it also has the ability to adapt to multiple terminals***
 Check it:
 ```sh
-deno install -A --unstable -n BADGESH https://raw.githubusercontent.com/duart38/BADGESH/main/mod.ts
+deno install -f --reload -A --unstable -n BADGESH https://raw.githubusercontent.com/duart38/BADGESH/main/mod.ts
 ```
 
 ### Flags 🚩
