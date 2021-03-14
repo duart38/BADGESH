@@ -4,6 +4,19 @@ import { config } from "./config.js";
 import {loadOrCreate} from "./utils/utils.ts";
 import CLI from "./CLI.ts";
 
+
+if(Deno.args.includes("-stats")){
+  new CLI(true);
+  Deno.exit();
+}else if(Deno.args.includes("-h")){
+  console.log(CLI.header(), `
+    \t| -h                prints this screen
+    \t| -stats            only display stats
+  `);
+  Deno.exit();
+}
+
+
 const textDecoder = new TextDecoder();
 
 enum SHELL {
