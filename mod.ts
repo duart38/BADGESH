@@ -1,8 +1,8 @@
 import { poke, checkLevel } from "./check.ts";
 import { set, updateDB } from "./db.ts";
 import { config } from "./config.js";
-import { printOut, printOutHTML } from "./notify.ts";
 import {loadOrCreate} from "./utils/utils.ts";
+import CLI from "./CLI.ts";
 
 const textDecoder = new TextDecoder();
 
@@ -17,7 +17,8 @@ export function checkShell(): SHELL {
   else return SHELL.bash;
 }
 
-let dbdata = JSON.parse(loadOrCreate(config.db.stats, JSON.stringify({"lastFileSize":0})))
+let dbdata = JSON.parse(loadOrCreate(config.db.stats, JSON.stringify({"lastFileSize":0})));
+
 var lastFileSize = dbdata.lastFileSize;
 export async function getHistory(file: string) {
   const { size } = Deno.statSync(file);
@@ -38,11 +39,13 @@ export async function getHistory(file: string) {
   );
   const ACCUMULATED_COMMANDS = poke(newLines.split("\n"));
   const NEW_DATA = updateDB(ACCUMULATED_COMMANDS);
-  printOut(NEW_DATA);
   checkLevel(NEW_DATA);
 }
 
 const SHELL_HISTORY = `${Deno.env.get("HOME")}/${checkShell()}`;
+await getHistory(SHELL_HISTORY);
+new CLI(true);
+
 const watcher = Deno.watchFs(SHELL_HISTORY);
 for await (const event of watcher) {
   getHistory(SHELL_HISTORY);
