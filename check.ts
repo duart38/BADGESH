@@ -16,12 +16,13 @@ const RANGES = levelsToRange(levels(config.levels)).reverse();
  * @param data 
  */
 export function checkLevel(data: Record<string, number>) {
-  const ACHIEVEMENTS = JSON.parse(loadOrCreate(config.db.achievements, "{}"));
+  const ACHIEVEMENTS: {[x: string]: {givenRanges: number[], textValues: string[]}} = JSON.parse(loadOrCreate(config.db.achievements, "{}"));
   Object.entries(data).forEach(([key, val]) => {
     const currLevel = RANGES.find((x) => x.check(val));
-    if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]=[];
-    if (currLevel && !ACHIEVEMENTS[`${key}`].includes(currLevel.lowerBound)) {
+    if(ACHIEVEMENTS[`${key}`] == undefined) ACHIEVEMENTS[`${key}`]= {givenRanges: [], textValues: []};
+    if (currLevel && !ACHIEVEMENTS[`${key}`].givenRanges.includes(currLevel.lowerBound)) {
       const str = getRandomAchievement(key)?.build(currLevel.lowerBound) || `🏆: run 🧰 ${key} more than ${currLevel.lowerBound} times`;
+      ACHIEVEMENTS[`${key}`].textValues.push(str);
       if(isPlatypus()){
         platypusNotification(str);
       }else{
@@ -29,7 +30,7 @@ export function checkLevel(data: Record<string, number>) {
           "Achievement", str
         );
       }
-      ACHIEVEMENTS[`${key}`].push(currLevel.lowerBound);
+      ACHIEVEMENTS[`${key}`].givenRanges.push(currLevel.lowerBound);
     }
   });
   Deno.writeTextFileSync(config.db.achievements, JSON.stringify(ACHIEVEMENTS));
