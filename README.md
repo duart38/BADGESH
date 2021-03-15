@@ -41,7 +41,7 @@ The output below can be generated using the -h flag
 | -stats            only display stats
 ```
 
-## support
+## Support
 - [x] MacOS
 - [x] Linux
 - [ ] Windows (untested)
