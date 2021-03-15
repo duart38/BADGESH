@@ -44,4 +44,4 @@ The output below can be generated using the -h flag
 ## Support
 - [x] MacOS
 - [x] Linux
-- [ ] Windows (untested)
+- [ ] Windows (Coming soon)
