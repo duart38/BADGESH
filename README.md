@@ -5,7 +5,8 @@ terminal achievement thingy.
 <img align="left" src="https://github.com/duart38/BADGESH/blob/main/images/notf1.png?raw=true" alt="drawing" width="50%"/>
 <br/>
 
-![alt text](https://img.shields.io/github/license/duart38/BADGESH?color=blue&style=for-the-badge "License") <br/>
+![alt text](https://img.shields.io/github/license/duart38/BADGESH?color=blue&style=for-the-badge "License") [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fduart38%2FBADGESH.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fduart38%2FBADGESH?ref=badge_shield)
+<br/>
 ![alt text](https://img.shields.io/github/v/release/duart38/BADGESH?color=red&style=for-the-badge "Release")
 
 <img src="https://github.com/duart38/BADGESH/blob/main/images/cli.png?raw=true" alt="drawing" width="100%"/>
@@ -45,3 +46,7 @@ The output below can be generated using the -h flag
 - [x] MacOS
 - [x] Linux
 - [ ] Windows (Coming soon)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fduart38%2FBADGESH.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fduart38%2FBADGESH?ref=badge_large)
